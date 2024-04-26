@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Form Handler</title>
+</head>
+<body>
+    <form id="testForm" action="YOUR_FORM_HANDLER_ENDPOINT" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="first_name"><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="last_name"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById('testForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent default form submission
+            var formData = new FormData(this);
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.text())
+            .then(html => console.log(html))
+            .catch(error => console.error('Error:', error));
+        };
+    </script>
+</body>
+</html>
